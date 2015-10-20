@@ -1,10 +1,10 @@
-package inversions;
+package com.gs.coursera_algo.inversions;
 
 import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
-import inversions.Inversions.Result;
+import com.gs.coursera_algo.inversions.Inversions.Result;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;

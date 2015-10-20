@@ -1,4 +1,4 @@
-package inversions;
+package com.gs.coursera_algo.inversions;
 
 import java.util.ArrayList;
 import java.util.Collections;
