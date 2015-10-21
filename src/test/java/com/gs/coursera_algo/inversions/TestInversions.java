@@ -51,11 +51,10 @@ public class TestInversions {
 
         // Then
         assertThat(result.inversionNum(), equalTo(0L));
-        assertThat(result.sortedArray(), empty());
+        assertThat(result.sortedList(), empty());
     }
 
     private <T> long bruteForceCountInversions(final List<T> xs, final Comparator<T> comparator) {
-        // TODO: Implement
         final int n = xs.size();
 
         int inversionNum = 0;

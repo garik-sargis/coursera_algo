@@ -8,7 +8,6 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
-// TODO: Use instances
 public final class Inversions {
     public static <T> long countInversions(final List<T> xs, final Comparator<T> comparator) {
         // Preconditions
@@ -35,7 +34,7 @@ public final class Inversions {
             // The right half
             final List<T> zs = xs.subList(n / 2, n);
 
-            // Recursive calls
+            // Recursive call results
             final Result<T> rys = countInversionsAndSort(ys, comparator);
             final Result<T> rzs = countInversionsAndSort(zs, comparator);
 
@@ -44,20 +43,20 @@ public final class Inversions {
         }
     }
 
-    static <T> Result<T> merge(final Result<T> rxs, final Result<T> rys, Comparator<T> comparator) {
-        // Sorted arrays
-        final List<T> xs = rxs.sortedArray();
-        final List<T> ys = rys.sortedArray();
-        // Array lengths
-        final int m = xs.size();
-        final int n = ys.size();
+    static <T> Result<T> merge(final Result<T> rx, final Result<T> ry, Comparator<T> comparator) {
+        // Sorted lists
+        final List<T> xs = rx.sortedList();
+        final List<T> ys = ry.sortedList();
+        // List lengths
+        final int nx = xs.size();
+        final int ny = ys.size();
 
         int i = 0;
         int j = 0;
-        long inversionNum = rxs.inversionNum() + rys.inversionNum();
+        long inversionNum = rx.inversionNum() + ry.inversionNum();
         final ArrayList<T> zs = new ArrayList<>();
 
-        while (i < m && j < n) {
+        while (i < nx && j < ny) {
             final T x = xs.get(i);
             final T y = ys.get(j);
             // if (x <= y)
@@ -66,38 +65,38 @@ public final class Inversions {
                 i++;
             } else /* if (x > y) */ {
                 zs.add(y);
-                inversionNum += (m - i);
+                inversionNum += (nx - i);
                 j++;
             }
         }
 
         // Append the remaining elements to the result
-        zs.addAll(xs.subList(i, m));
-        zs.addAll(ys.subList(j, n));
+        zs.addAll(xs.subList(i, nx));
+        zs.addAll(ys.subList(j, ny));
 
         return Result.of(inversionNum, zs);
     }
 
     static final class Result<T> {
 
-        public static <T> Result<T> of(final long inversionNum, final List<T> sortedArray) {
-            return new Result<>(inversionNum, sortedArray);
+        public static <T> Result<T> of(final long inversionNum, final List<T> sortedList) {
+            return new Result<>(inversionNum, sortedList);
         }
 
         private final long mInversionNum;
-        private final List<T> mSortedArray;
+        private final List<T> mSortedList;
 
-        private Result(final long inversionNum, final List<T> sortedArray) {
+        private Result(final long inversionNum, final List<T> sortedList) {
             mInversionNum = inversionNum;
-            mSortedArray = sortedArray;
+            mSortedList = sortedList;
         }
 
         public long inversionNum() {
             return mInversionNum;
         }
 
-        public List<T> sortedArray() {
-            return mSortedArray;
+        public List<T> sortedList() {
+            return mSortedList;
         }
     }
 }
