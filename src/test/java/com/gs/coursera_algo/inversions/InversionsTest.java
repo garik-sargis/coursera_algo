@@ -5,9 +5,11 @@ import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
 import com.gs.coursera_algo.inversions.Inversions.Result;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
+import org.junit.runners.MethodSorters;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -18,7 +20,9 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class TestInversions {
+// TODO: Investigate assumptions
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class InversionsTest {
 
     @Rule
     public final Timeout mTimeoutRule = new Timeout(2000);
@@ -36,15 +40,18 @@ public class TestInversions {
     }
 
     @Test
-    public void verify_merge_merges_empty_arrays() {
+    public void verify_merging_empty_arrays_results_in_an_empty_array() {
         // Given
-        final ArrayList<Integer> xs = new ArrayList<>();
-        final ArrayList<Integer> ys = new ArrayList<>();
 
+        // Empty lists
+        final List<Integer> xs = ImmutableList.of();
+        final List<Integer> ys = ImmutableList.of();
+
+        // Empty lists with 0 inversions
         final Result<Integer> rxs = Result.of(0L, xs);
         final Result<Integer> rys = Result.of(0L, ys);
 
-        final Comparator<Integer> comparator = Comparator.<Integer>naturalOrder();
+        final Comparator<Integer> comparator = Comparator.naturalOrder();
 
         // When
         final Result<Integer> result = Inversions.merge(rxs, rys, comparator);
@@ -52,37 +59,6 @@ public class TestInversions {
         // Then
         assertThat(result.inversionNum(), equalTo(0L));
         assertThat(result.sortedList(), empty());
-    }
-
-    private <T> long bruteForceCountInversions(final List<T> xs, final Comparator<T> comparator) {
-        final int n = xs.size();
-
-        int inversionNum = 0;
-
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                // if (xs.get(j) < xs.get(i))
-                if (comparator.compare(xs.get(j), xs.get(i)) < 0) {
-                    inversionNum++;
-                }
-            }
-        }
-
-        return inversionNum;
-    }
-
-    @Test
-    public void verify_countInversions_matches_brute_force() {
-        // Given
-        final List<Integer> xs = ImmutableList.of(5, 4, 2, 1, 1, 2, 5, 5, 10, 43, 12);
-        final Comparator<Integer> comparator = Comparator.naturalOrder();
-
-        // When
-        final long resultBrute = bruteForceCountInversions(xs, comparator);
-        final long result = Inversions.countInversions(xs, comparator);
-
-        //Then
-        assertThat(result, equalTo(resultBrute));
     }
 
     @Test
