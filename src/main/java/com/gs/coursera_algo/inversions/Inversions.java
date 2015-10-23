@@ -1,5 +1,7 @@
 package com.gs.coursera_algo.inversions;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -54,27 +56,27 @@ public final class Inversions {
         int i = 0;
         int j = 0;
         long inversionNum = rx.inversionNum() + ry.inversionNum();
-        final ArrayList<T> zs = new ArrayList<>();
+        final ImmutableList.Builder<T> builder = ImmutableList.builder();
 
         while (i < nx && j < ny) {
             final T x = xs.get(i);
             final T y = ys.get(j);
             // if (x <= y)
             if (comparator.compare(x, y) <= 0) {
-                zs.add(x);
+                builder.add(x);
                 i++;
             } else /* if (x > y) */ {
-                zs.add(y);
+                builder.add(y);
                 inversionNum += (nx - i);
                 j++;
             }
         }
 
         // Append the remaining elements to the result
-        zs.addAll(xs.subList(i, nx));
-        zs.addAll(ys.subList(j, ny));
+        builder.addAll(xs.subList(i, nx));
+        builder.addAll(ys.subList(j, ny));
 
-        return Result.of(inversionNum, zs);
+        return Result.of(inversionNum, builder.build());
     }
 
     static final class Result<T> {
