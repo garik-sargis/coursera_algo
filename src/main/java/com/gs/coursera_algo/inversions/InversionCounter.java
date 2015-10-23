@@ -10,7 +10,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
-public final class Inversions {
+public final class InversionCounter {
     public static <T> long countInversions(final List<T> xs, final Comparator<T> comparator) {
         // Preconditions
         checkNotNull(xs);

@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-public class InversionsAgainstBruteForceTest {
+public class InversionCounterAgainstBruteForceTest {
 
     /**
      * @return the number of inversions in the supplied list using a simple brute-force approach
@@ -65,7 +65,7 @@ public class InversionsAgainstBruteForceTest {
 
     private final long mExpectedOutput;
 
-    public InversionsAgainstBruteForceTest(final List<Integer> input, final long expectedOutput) {
+    public InversionCounterAgainstBruteForceTest(final List<Integer> input, final long expectedOutput) {
         mInput = input;
         mExpectedOutput = expectedOutput;
     }
@@ -75,7 +75,7 @@ public class InversionsAgainstBruteForceTest {
         // Given input
 
         // When
-        final long output = Inversions.countInversions(mInput, Comparator.naturalOrder());
+        final long output = InversionCounter.countInversions(mInput, Comparator.naturalOrder());
 
         // Then
         assertThat(output, equalTo(mExpectedOutput));

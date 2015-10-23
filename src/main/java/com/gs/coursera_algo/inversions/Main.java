@@ -19,7 +19,7 @@ public class Main {
         }
 
         // Count Inversions
-        final long inversionNum = Inversions.countInversions(xs);
+        final long inversionNum = InversionCounter.countInversions(xs);
 
         // Output the result
         System.out.println(inversionNum);

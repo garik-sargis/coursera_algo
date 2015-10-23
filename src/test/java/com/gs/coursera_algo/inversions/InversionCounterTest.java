@@ -4,7 +4,7 @@ import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
-import com.gs.coursera_algo.inversions.Inversions.Result;
+import com.gs.coursera_algo.inversions.InversionCounter.Result;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertThat;
 
 // TODO: Investigate assumptions
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class InversionsTest {
+public class InversionCounterTest {
 
     @Rule
     public final Timeout mTimeoutRule = new Timeout(2000);
@@ -30,13 +30,13 @@ public class InversionsTest {
     @Test(expected = NullPointerException.class)
     public void verify_countInversions_throws_NullPointerException_if_receives_null_array() {
         final Comparator mockComparator = Mockito.mock(Comparator.class);
-        Inversions.countInversions(null, mockComparator);
+        InversionCounter.countInversions(null, mockComparator);
     }
 
     @Test(expected = NullPointerException.class)
     public void verify_countInversions_throws_NullPointerException_if_receives_null_comparator() {
         final ArrayList mockList = Mockito.mock(ArrayList.class);
-        Inversions.countInversions(mockList, null);
+        InversionCounter.countInversions(mockList, null);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class InversionsTest {
         final Comparator<Integer> comparator = Comparator.naturalOrder();
 
         // When
-        final Result<Integer> result = Inversions.merge(rxs, rys, comparator);
+        final Result<Integer> result = InversionCounter.merge(rxs, rys, comparator);
 
         // Then
         assertThat(result.inversionNum(), equalTo(0L));
@@ -69,7 +69,7 @@ public class InversionsTest {
         final Comparator<Integer> comparator = Comparator.naturalOrder();
 
         // When
-        final long inversions = Inversions.countInversions(xs, comparator);
+        final long inversions = InversionCounter.countInversions(xs, comparator);
 
         // Then
         assertThat(inversions, equalTo(0L));
