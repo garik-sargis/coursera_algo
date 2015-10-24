@@ -1,77 +1,79 @@
 package com.gs.coursera_algo.inversions;
 
-import com.google.common.collect.ContiguousSet;
-import com.google.common.collect.DiscreteDomain;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Range;
-import com.gs.coursera_algo.inversions.InversionCounter.Result;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.junit.runners.MethodSorters;
-import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 // TODO: Investigate assumptions
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class InversionCounterTest {
+public abstract class InversionCounterTest {
 
     @Rule
     public final Timeout mTimeoutRule = new Timeout(2000);
 
-    @Test(expected = NullPointerException.class)
-    public void verify_countInversions_throws_NullPointerException_if_receives_null_array() {
-        final Comparator mockComparator = Mockito.mock(Comparator.class);
-        InversionCounter.countInversions(null, mockComparator);
+    protected abstract InversionCounter<Integer> createInstance(Comparator<Integer> comparator);
+
+    private InversionCounter<Integer> mInversionCounter;
+
+    @Before
+    public final void initializeInstance() {
+        mInversionCounter = createInstance(Comparator.<Integer>naturalOrder());
     }
 
     @Test(expected = NullPointerException.class)
-    public void verify_countInversions_throws_NullPointerException_if_receives_null_comparator() {
-        final ArrayList mockList = Mockito.mock(ArrayList.class);
-        InversionCounter.countInversions(mockList, null);
-    }
-
-    @Test
-    public void verify_merging_empty_arrays_results_in_an_empty_array() {
+    public final void verify_countInversions_throws_NullPointerException_if_receives_null_array() {
         // Given
-
-        // Empty lists
-        final List<Integer> xs = ImmutableList.of();
-        final List<Integer> ys = ImmutableList.of();
-
-        // Empty lists with 0 inversions
-        final Result<Integer> rxs = Result.of(0L, xs);
-        final Result<Integer> rys = Result.of(0L, ys);
-
-        final Comparator<Integer> comparator = Comparator.naturalOrder();
+        final List<Integer> xs = null;
 
         // When
-        final Result<Integer> result = InversionCounter.merge(rxs, rys, comparator);
+        mInversionCounter.countInversions(xs);
 
         // Then
-        assertThat(result.inversionNum(), equalTo(0L));
-        assertThat(result.sortedList(), empty());
+        // Throws NullPointerException
     }
 
     @Test
     public void verify_no_inversions_in_sorted_lists() {
         // Given
-        final ImmutableList<Integer> xs = ContiguousSet.create(Range.closedOpen(0, 100000), DiscreteDomain.integers())
-                .asList();
-        final Comparator<Integer> comparator = Comparator.naturalOrder();
+        final int min = 0;
+        final int max = 100000;
+        final List<Integer> xs = IntStream.range(min, max + 1)
+                .boxed().collect(Collectors.toList());
 
         // When
-        final long inversions = InversionCounter.countInversions(xs, comparator);
+        final long inversions = mInversionCounter.countInversions(xs);
 
         // Then
         assertThat(inversions, equalTo(0L));
+    }
+
+    @Test
+    public void verify_inversions_in_reverse_sorted_list() {
+        // Given
+        final int max = 100000;
+        final int min = 0;
+        final int n = max - min + 1;
+        final List<Integer> xs = IntStream.iterate(max, x -> x - 1)
+                .limit(n)
+                .boxed().collect(Collectors.toList());
+
+        // When
+        final long inversions = mInversionCounter.countInversions(xs);
+
+        // Then
+        final long expectedResult = ((long) n * ((long) n - 1)) / 2;
+        assertThat(inversions, equalTo(expectedResult));
     }
 }

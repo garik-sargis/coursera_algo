@@ -18,8 +18,10 @@ public class Main {
             xs.add(x);
         }
 
+        final MSortingInversionCounter<Integer> inversionCounter = MSortingInversionCounter.withNaturalOrder();
+
         // Count Inversions
-        final long inversionNum = InversionCounter.countInversions(xs);
+        final long inversionNum = inversionCounter.countInversions(xs);
 
         // Output the result
         System.out.println(inversionNum);

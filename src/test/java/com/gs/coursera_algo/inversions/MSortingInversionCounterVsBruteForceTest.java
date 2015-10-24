@@ -1,8 +1,6 @@
 package com.gs.coursera_algo.inversions;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -16,7 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-public class InversionCounterAgainstBruteForceTest {
+public class MSortingInversionCounterVsBruteForceTest {
 
     /**
      * @return the number of inversions in the supplied list using a simple brute-force approach
@@ -58,14 +56,11 @@ public class InversionCounterAgainstBruteForceTest {
                 .collect(Collectors.toList());
     }
 
-    @Rule
-    public final Timeout mTimeoutRule = new Timeout(2000);
-
     private final List<Integer> mInput;
 
     private final long mExpectedOutput;
 
-    public InversionCounterAgainstBruteForceTest(final List<Integer> input, final long expectedOutput) {
+    public MSortingInversionCounterVsBruteForceTest(final List<Integer> input, final long expectedOutput) {
         mInput = input;
         mExpectedOutput = expectedOutput;
     }
@@ -73,9 +68,9 @@ public class InversionCounterAgainstBruteForceTest {
     @Test
     public void verify_countInversions_matches_brute_force() {
         // Given input
-
+        final MSortingInversionCounter<Integer> inversionCounter = MSortingInversionCounter.withNaturalOrder();
         // When
-        final long output = InversionCounter.countInversions(mInput, Comparator.naturalOrder());
+        final long output = inversionCounter.countInversions(mInput);
 
         // Then
         assertThat(output, equalTo(mExpectedOutput));
