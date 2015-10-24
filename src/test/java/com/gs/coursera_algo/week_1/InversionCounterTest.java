@@ -1,6 +1,5 @@
-package com.gs.coursera_algo.inversions;
+package com.gs.coursera_algo.week_1;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;

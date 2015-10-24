@@ -1,4 +1,4 @@
-package com.gs.coursera_algo.inversions;
+package com.gs.coursera_algo.week_1;
 
 import java.util.Comparator;
 
