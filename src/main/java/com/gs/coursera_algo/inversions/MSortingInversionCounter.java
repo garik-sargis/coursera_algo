@@ -10,7 +10,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 
 // TODO: Don't test private methods
-// TODO: Make all methods final
 public final class MSortingInversionCounter<T> implements InversionCounter<T>{
 
     public static <S> MSortingInversionCounter<S> with(Comparator<S> comparator) {

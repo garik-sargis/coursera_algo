@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-public class MSortingInversionCounterVsBruteForceTest {
+public final class MSortingInversionCounterVsBruteForceTest {
 
     /**
      * @return the number of inversions in the supplied list using a simple brute-force approach

@@ -3,7 +3,7 @@ package com.gs.coursera_algo.inversions;
 import java.util.Comparator;
 import java.util.List;
 
-public class BruteForceInversionCounter<T> implements InversionCounter<T> {
+public final class BruteForceInversionCounter<T> implements InversionCounter<T> {
 
     public static <S> BruteForceInversionCounter<S> with(Comparator<S> comparator) {
         return new BruteForceInversionCounter<>(comparator);
