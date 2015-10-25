@@ -8,7 +8,6 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
 // TODO: Don't test private methods
 public final class MSortingInversionCounter<T> implements InversionCounter<T>{
 
