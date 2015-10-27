@@ -1,9 +1,6 @@
 package com.gs.coursera_algo.week_1;
 
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.Timeout;
 import org.junit.runners.MethodSorters;
 
@@ -60,6 +57,7 @@ public abstract class InversionCounterTest {
         assertThat("The number of inversions in a sorted list should be 0", inversions, equalTo(0L));
     }
 
+    @Ignore
     @Test
     public void verify_no_inversions_in_large_ascending_lists() {
         // Given
@@ -93,6 +91,7 @@ public abstract class InversionCounterTest {
         assertThat("Wrong number of inversions in a descending list", inversions, equalTo(expectedResult));
     }
 
+    @Ignore
     @Test
     public void verify_inversions_in_large_descending_list() {
         // Given
