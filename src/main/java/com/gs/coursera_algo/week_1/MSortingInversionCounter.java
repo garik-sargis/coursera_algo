@@ -1,17 +1,17 @@
 package com.gs.coursera_algo.week_1;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 // TODO: Don't test private methods
-public final class MSortingInversionCounter<T> implements InversionCounter<T>{
+public final class MSortingInversionCounter<T> implements InversionCounter<T> {
 
-    public static <S> MSortingInversionCounter<S> with(Comparator<S> comparator) {
+    public static <S> MSortingInversionCounter<S> with(final Comparator<S> comparator) {
         return new MSortingInversionCounter<>(comparator);
     }
 
@@ -30,20 +30,23 @@ public final class MSortingInversionCounter<T> implements InversionCounter<T>{
         mComparator = comparator;
     }
 
+    @Override
     public long countInversions(final List<T> xs) {
         // Preconditions
         checkNotNull(xs);
 
-        return countInversionsAndSort(Collections.unmodifiableList(xs)).inversionNum();
+        return countInversionsAndSort(xs).inversionNum();
     }
 
 
     private Result<T> countInversionsAndSort(final List<T> xs) {
         final int n = xs.size();
 
+        final Result<T> result;
+
         // Base case: if n is 0 or 1
         if (n < 2) {
-            return Result.of(0L, xs);
+            result = Result.of(0L, xs);
         } else /*if (n >= 2)*/ {
             // The left half
             final List<T> ys = xs.subList(0, n / 2);
@@ -55,8 +58,10 @@ public final class MSortingInversionCounter<T> implements InversionCounter<T>{
             final Result<T> rzs = countInversionsAndSort(zs);
 
             // Combine (merge) the results of the recursive calls
-            return merge(rys, rzs);
+            result = merge(rys, rzs);
         }
+
+        return result;
     }
 
     private Result<T> merge(final Result<T> rx, final Result<T> ry) {
@@ -70,7 +75,7 @@ public final class MSortingInversionCounter<T> implements InversionCounter<T>{
         int i = 0;
         int j = 0;
         long inversionNum = rx.inversionNum() + ry.inversionNum();
-        final ImmutableList.Builder<T> builder = ImmutableList.builder();
+        final Builder<T> builder = ImmutableList.builder();
 
         while (i < nx && j < ny) {
             final T x = xs.get(i);
@@ -81,16 +86,20 @@ public final class MSortingInversionCounter<T> implements InversionCounter<T>{
                 i++;
             } else /* if (x > y) */ {
                 builder.add(y);
-                inversionNum += (nx - i);
+                inversionNum += nx - i;
                 j++;
             }
         }
 
         // Append the remaining elements to the result
-        builder.addAll(xs.subList(i, nx));
-        builder.addAll(ys.subList(j, ny));
+        final List<T> xs1 = xs.subList(i, nx);
+        final List<T> ys1 = ys.subList(j, ny);
 
-        return Result.of(inversionNum, builder.build());
+        builder.addAll(xs1);
+        builder.addAll(ys1);
+
+        final ImmutableList<T> zs = builder.build();
+        return Result.of(inversionNum, zs);
     }
 
     private static final class Result<T> {
