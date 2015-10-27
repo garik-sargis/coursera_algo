@@ -2,7 +2,7 @@ Algorithms: Design and Analysis
 ==============================
 
 This repository contains solutions to the assignments of the **Coursera** course **[Algorithms: Design and Analysis 
-Part 1](https://www.coursera.org/course/algo)**.
+Part 1](https://www.coursera.org/course/algo)**. The solutions are implemented using **Java 8**.
 
 ## Project Structure
 
