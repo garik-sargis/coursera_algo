@@ -2,7 +2,6 @@ package com.gs.coursera_algo.week_1;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 public final class SortedSetInversionCounter<E> implements InversionCounter<E> {

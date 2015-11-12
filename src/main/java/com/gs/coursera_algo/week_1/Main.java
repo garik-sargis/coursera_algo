@@ -1,6 +1,7 @@
 package com.gs.coursera_algo.week_1;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,7 @@ public final class Main {
     public static void main(final String[] args) {
         final Scanner scanner = new Scanner(System.in);
         // Create an empty list
-        final ArrayList<Integer> xs = new ArrayList<>();
+        final List<Integer> xs = new ArrayList<>();
         // Populate the list
         while (scanner.hasNextInt()) {
             final int x = scanner.nextInt();
