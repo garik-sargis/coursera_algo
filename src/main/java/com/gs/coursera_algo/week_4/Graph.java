@@ -1,18 +1,18 @@
 package com.gs.coursera_algo.week_4;
 
-import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Sets;
 
 import java.util.stream.Stream;
 
 public final class Graph {
     public static final class Builder {
-        private final ImmutableSetMultimap.Builder<Integer, Integer> mOutSetsBuilder;
-        private final ImmutableSetMultimap.Builder<Integer, Integer> mInSetsBuilder;
+        private final ImmutableListMultimap.Builder<Integer, Integer> mOutSetsBuilder;
+        private final ImmutableListMultimap.Builder<Integer, Integer> mInSetsBuilder;
 
         private Builder() {
-            mOutSetsBuilder = ImmutableSetMultimap.builder();
-            mInSetsBuilder = ImmutableSetMultimap.builder();
+            mOutSetsBuilder = ImmutableListMultimap.builder();
+            mInSetsBuilder = ImmutableListMultimap.builder();
         }
 
         public Builder addArc(final int v1, final int v2) {
@@ -22,8 +22,8 @@ public final class Graph {
         }
 
         public Graph build() {
-            final ImmutableSetMultimap<Integer, Integer> outSets = mOutSetsBuilder.build();
-            final ImmutableSetMultimap<Integer, Integer> inSets = mInSetsBuilder.build();
+            final ImmutableListMultimap<Integer, Integer> outSets = mOutSetsBuilder.build();
+            final ImmutableListMultimap<Integer, Integer> inSets = mInSetsBuilder.build();
             return new Graph(outSets, inSets);
         }
     }
@@ -32,11 +32,11 @@ public final class Graph {
         return new Builder();
     }
 
-    private final ImmutableSetMultimap<Integer, Integer> mOutSets;
-    private final ImmutableSetMultimap<Integer, Integer> mInSets;
+    private final ImmutableListMultimap<Integer, Integer> mOutSets;
+    private final ImmutableListMultimap<Integer, Integer> mInSets;
 
-    private Graph(final ImmutableSetMultimap<Integer, Integer> outSets,
-                  final ImmutableSetMultimap<Integer, Integer> inSets) {
+    private Graph(final ImmutableListMultimap<Integer, Integer> outSets,
+                  final ImmutableListMultimap<Integer, Integer> inSets) {
         mOutSets = outSets;
         mInSets = inSets;
     }
