@@ -52,7 +52,7 @@ public final class Sccs {
         for (final Integer rootV : graph.vertexes()) {
             // Push the vertex onto the stack if it's not already explored
             if (!explored.contains(rootV)) {
-
+                explored.add(rootV);
                 stack.push(rootV);
 
                 while (!stack.isEmpty()) {
@@ -62,13 +62,13 @@ public final class Sccs {
                     final Optional<Integer> tOpt = Sets.difference(graph.outSet(v), explored).stream().findFirst();
                     if (tOpt.isPresent()) {
                         // Push the unexplored vertex onto the stack
+                        // Mark the vertex explored
+                        explored.add(tOpt.get());
                         stack.push(tOpt.get());
                     } else {
                         resultBuilder.add(v);
                         stack.pop();
                     }
-                    // Mark the vertex explored
-                    explored.add(v);
                 }
             }
         }
@@ -92,6 +92,7 @@ public final class Sccs {
         for (final Integer rootV : vs) {
             // Push the vertex onto the stack if it's not already explored
             if (!explored.contains(rootV)) {
+                explored.add(rootV);
                 stack.push(rootV);
 
                 final ImmutableList.Builder<Integer> sccBuilder = ImmutableList.builder();
@@ -104,13 +105,13 @@ public final class Sccs {
                             .stream().findFirst();
                     if (tOpt.isPresent()) {
                         // Push the unexplored vertex onto the stack
+                        // Mark the vertex explored
+                        explored.add(tOpt.get());
                         stack.push(tOpt.get());
                     } else {
                         sccBuilder.add(v);
                         stack.pop();
                     }
-                    // Mark the vertex explored
-                    explored.add(v);
                 }
                 // Build the scc and add it to the result list
                 final ImmutableList<Integer> scc = sccBuilder.build();
