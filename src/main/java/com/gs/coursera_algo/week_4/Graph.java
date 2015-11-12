@@ -1,10 +1,9 @@
 package com.gs.coursera_algo.week_4;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Sets;
 
-import java.util.Set;
+import java.util.stream.Stream;
 
 public final class Graph {
     public static final class Builder {
@@ -42,16 +41,16 @@ public final class Graph {
         mInSets = inSets;
     }
 
-    public ImmutableSet<Integer> outSet(final int v) {
-        return mOutSets.get(v);
+    public Stream<Integer> outSet(final int v) {
+        return mOutSets.get(v).stream();
     }
 
-    public ImmutableSet<Integer> inSet(final int v) {
-        return mInSets.get(v);
+    public Stream<Integer> inSet(final int v) {
+        return mInSets.get(v).stream();
     }
 
-    public Set<Integer> vertexes() {
-        return Sets.union(mOutSets.keySet(), mInSets.keySet());
+    public Stream<Integer> vertexes() {
+        return Sets.union(mOutSets.keySet(), mInSets.keySet()).stream();
     }
 
     public Graph reversed() {

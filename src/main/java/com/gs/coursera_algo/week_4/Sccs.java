@@ -2,7 +2,6 @@ package com.gs.coursera_algo.week_4;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,7 +48,7 @@ public final class Sccs {
         final Deque<Integer> stack = new LinkedList<>();
 
         // Iterate over all vertexes
-        for (final Integer rootV : graph.vertexes()) {
+        graph.vertexes().forEach(rootV -> {
             // Push the vertex onto the stack if it's not already explored
             if (!explored.contains(rootV)) {
                 explored.add(rootV);
@@ -59,7 +58,9 @@ public final class Sccs {
                     // Investigate the vertex at the top of the stack
                     final int v = stack.peek();
                     // The first unexplored out set vertex (if one exists)
-                    final Optional<Integer> tOpt = Sets.difference(graph.outSet(v), explored).stream().findFirst();
+                    final Optional<Integer> tOpt = graph.outSet(v)
+                            .filter(vert -> !explored.contains(vert))
+                            .findAny();
                     if (tOpt.isPresent()) {
                         // Push the unexplored vertex onto the stack
                         // Mark the vertex explored
@@ -71,7 +72,7 @@ public final class Sccs {
                     }
                 }
             }
-        }
+        });
 
 
         return resultBuilder.build();
@@ -89,7 +90,7 @@ public final class Sccs {
         final Deque<Integer> stack = new LinkedList<>();
 
         // Iterate over all vertexes
-        for (final Integer rootV : vs) {
+        vs.forEach(rootV -> {
             // Push the vertex onto the stack if it's not already explored
             if (!explored.contains(rootV)) {
                 explored.add(rootV);
@@ -101,8 +102,9 @@ public final class Sccs {
                     // Investigate the vertex at the top of the stack
                     final int v = stack.peek();
                     // The first unexplored out set vertex (if one exists)
-                    final Optional<Integer> tOpt = Sets.difference(graph.outSet(v), explored)
-                            .stream().findFirst();
+                    final Optional<Integer> tOpt = graph.outSet(v)
+                            .filter(vert -> !explored.contains(vert))
+                            .findAny();
                     if (tOpt.isPresent()) {
                         // Push the unexplored vertex onto the stack
                         // Mark the vertex explored
@@ -117,7 +119,7 @@ public final class Sccs {
                 final ImmutableList<Integer> scc = sccBuilder.build();
                 resultBuilder.add(scc);
             }
-        }
+        });
 
 
         return resultBuilder.build();
