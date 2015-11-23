@@ -20,7 +20,7 @@ public final class Main {
         final Graph graph = graphBuilder.build();
 
         // Get the list of scc sizes in descending order
-        final List<Integer> sccSizes = Sccs.sccDescendingSizes(graph);
+        final List<Integer> sccSizes = SccComputer.INSTANCE.sccDescendingSizes(graph);
 
         // Output the result
         sccSizes.stream().limit(5).forEach(System.out::println);

@@ -1,7 +1,6 @@
 package com.gs.coursera_algo.week_4;
 
 import com.google.common.collect.ImmutableList;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class SccsTest {
+public class SccComputerTest {
 
     @Test
     public void testVeretexesByEndTimes() {
@@ -17,7 +16,7 @@ public class SccsTest {
                 .addArc(1, 2)
                 .build();
 
-        final List<Integer> result = Sccs.vertexesByFinishingTimes(graph);
+        final List<Integer> result = SccComputer.INSTANCE.vertexesByFinishingTimes(graph);
         assertThat(result, equalTo(ImmutableList.of(2, 1)));
     }
 
@@ -28,7 +27,7 @@ public class SccsTest {
                 .addArc(1, 2)
                 .build();
 
-        final List<Integer> result = Sccs.vertexesByFinishingTimes(graph);
+        final List<Integer> result = SccComputer.INSTANCE.vertexesByFinishingTimes(graph);
         assertThat(result, equalTo(ImmutableList.of(3, 2, 1)));
     }
 
@@ -38,7 +37,7 @@ public class SccsTest {
                 .addArc(1, 2)
                 .build();
 
-        final List<List<Integer>> sccs = Sccs.getSccs(graph);
+        final List<List<Integer>> sccs = SccComputer.INSTANCE.getSccs(graph);
 
         assertThat(sccs.size(), equalTo(2));
     }
@@ -49,7 +48,7 @@ public class SccsTest {
                 .addArc(1, 3)
                 .build();
 
-        final List<List<Integer>> sccs = Sccs.getSccs(graph);
+        final List<List<Integer>> sccs = SccComputer.INSTANCE.getSccs(graph);
 
         assertThat(sccs.size(), equalTo(3));
     }
@@ -62,7 +61,7 @@ public class SccsTest {
                 .addArc(1, 3)
                 .build();
 
-        final List<Integer> sccSizes = Sccs.sccDescendingSizes(graph);
+        final List<Integer> sccSizes = SccComputer.INSTANCE.sccDescendingSizes(graph);
 
         assertThat(sccSizes, equalTo(ImmutableList.of(1, 1, 1)));
     }
@@ -75,7 +74,7 @@ public class SccsTest {
                 .addArc(2, 1)
                 .build();
 
-        final List<Integer> sccSizes = Sccs.sccDescendingSizes(graph);
+        final List<Integer> sccSizes = SccComputer.INSTANCE.sccDescendingSizes(graph);
 
         assertThat(sccSizes, equalTo(ImmutableList.of(2)));
     }
@@ -91,7 +90,7 @@ public class SccsTest {
                 .addArc(5, 3)
                 .build();
 
-        final List<Integer> sccSizes = Sccs.sccDescendingSizes(graph);
+        final List<Integer> sccSizes = SccComputer.INSTANCE.sccDescendingSizes(graph);
 
         assertThat(sccSizes, equalTo(ImmutableList.of(3, 2)));
     }
@@ -108,7 +107,7 @@ public class SccsTest {
                 .addArc(5, 3)
                 .build();
 
-        final List<Integer> sccSizes = Sccs.sccDescendingSizes(graph);
+        final List<Integer> sccSizes = SccComputer.INSTANCE.sccDescendingSizes(graph);
 
         assertThat(sccSizes, equalTo(ImmutableList.of(3, 2)));
     }
@@ -126,7 +125,7 @@ public class SccsTest {
                 .addArc(5, 1)
                 .build();
 
-        final List<Integer> sccSizes = Sccs.sccDescendingSizes(graph);
+        final List<Integer> sccSizes = SccComputer.INSTANCE.sccDescendingSizes(graph);
 
         assertThat(sccSizes, equalTo(ImmutableList.of(5)));
     }
@@ -154,7 +153,7 @@ public class SccsTest {
         final int size = 10_000;
         final Graph graph = generateCycle(size);
 
-        final List<Integer> sccSizes = Sccs.sccDescendingSizes(graph);
+        final List<Integer> sccSizes = SccComputer.INSTANCE.sccDescendingSizes(graph);
 
         assertThat(sccSizes, equalTo(ImmutableList.of(size)));
     }
@@ -166,7 +165,7 @@ public class SccsTest {
         final int size = 10_000;
         final Graph graph = generateFork(size);
 
-        final List<Integer> sccSizes = Sccs.sccDescendingSizes(graph);
+        final List<Integer> sccSizes = SccComputer.INSTANCE.sccDescendingSizes(graph);
 
         assertThat(sccSizes.size(), equalTo(size));
     }

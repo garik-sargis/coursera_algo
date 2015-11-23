@@ -6,19 +6,13 @@ import com.google.common.collect.Lists;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public final class Sccs {
-
-    /**
-     * Do not instantiate!
-     */
-    private Sccs() {
-        // Empty
-    }
+public enum SccComputer {
+    INSTANCE;
 
     /**
      * @return a list of sizes of the SCCs in descending order
      */
-    public static List<Integer> sccDescendingSizes(Graph graph) {
+    public List<Integer> sccDescendingSizes(final Graph graph) {
         final List<List<Integer>> sccs = getSccs(graph);
         return sccs.stream()
                 .map(List::size)
@@ -26,20 +20,15 @@ public final class Sccs {
                 .collect(Collectors.toList());
     }
 
-    // TODO: Remove logs
-    public static List<List<Integer>> getSccs(final Graph graph) {
+    public List<List<Integer>> getSccs(final Graph graph) {
         // Get the reversed graph
         final Graph revGraph = graph.reversed();
-        System.out.println("Graph reversed");
         // Get a list of vertexes sorted by the finishing times of the reversed graph
         final List<Integer> vs = vertexesByFinishingTimes(revGraph);
-        System.out.println("Finishing times computed");
-        final List<List<Integer>> sccs = getSccsHelper(graph, Lists.reverse(vs));
-        System.out.println("SCCs computed");
-        return sccs;
+        return getSccsHelper(graph, Lists.reverse(vs));
     }
 
-    public static ImmutableList<Integer> vertexesByFinishingTimes(final Graph graph) {
+    public ImmutableList<Integer> vertexesByFinishingTimes(final Graph graph) {
         final ImmutableList.Builder<Integer> resultBuilder = ImmutableList.builder();
 
         // The set of explored vertexes
@@ -81,7 +70,7 @@ public final class Sccs {
     /**
      * @param vs a list of vertexes reverse sorted by the finishing times of the reversed graph
      */
-    public static List<List<Integer>> getSccsHelper(final Graph graph, final Iterable<Integer> vs) {
+    public List<List<Integer>> getSccsHelper(final Graph graph, final Iterable<Integer> vs) {
         final ImmutableList.Builder<List<Integer>> resultBuilder = ImmutableList.builder();
 
         // The set of explored vertexes
