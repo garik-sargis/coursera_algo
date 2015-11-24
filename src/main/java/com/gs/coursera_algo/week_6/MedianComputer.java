@@ -3,10 +3,7 @@ package com.gs.coursera_algo.week_6;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-// [0] - -
-// * * 0 * *
-// * 0 * *
-public class MedianComputer {
+public final class MedianComputer {
 
     public static MedianComputer create() {
         return new MedianComputer();
@@ -27,14 +24,14 @@ public class MedianComputer {
         if (mSize == 0) {
             mMedian = val;
         } else {
-            if(val <= mMedian) {
+            if (val <= mMedian) {
                 mLeftMaxHeap.add(val);
-                if(!isNormalized()) {
+                if (!isNormalized()) {
                     shiftRight();
                 }
             } else {
                 mRightMinHeap.add(val);
-                if(!isNormalized()) {
+                if (!isNormalized()) {
                     shiftLeft();
                 }
             }
